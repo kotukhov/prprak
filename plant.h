@@ -1,39 +1,33 @@
-/*#ifndef PLANT_H_INCLUDED*/
-// #define PLANT_H_INCLUDED
+#ifndef PLANT_H
+#define PLANT_H
 
-#include <iostream>
-#include <vector>
-#include <cmath>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-	/** @brief Описание состояния объекта управления или исследования. */
-	typedef double Plant[53];
+/** @brief РћРїРёСЃР°РЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РѕР±СЉРµРєС‚Р° СѓРїСЂР°РІР»РµРЅРёСЏ РёР»Рё РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ. */
+typedef double Plant[53];
 
-	/** @brief Инициализирует состояние объекта управления или исследования. */
-	void plant_init(Plant plant);
+/** @brief РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ РѕР±СЉРµРєС‚Р° СѓРїСЂР°РІР»РµРЅРёСЏ РёР»Рё РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ. */
+void plant_init(Plant plant);
 
-	/**
-	 * @brief Считывает показатели объекта исследования.
-	 * @param kanal Канал измерений.
-	 * @return Значение показателя.
-	 */
-	double plant_measure(int kanal, Plant plant);
+/**
+ * @brief РЎС‡РёС‚С‹РІР°РµС‚ РїРѕРєР°Р·Р°С‚РµР»Рё РѕР±СЉРµРєС‚Р° РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ.
+ * @param kanal РљР°РЅР°Р» РёР·РјРµСЂРµРЅРёР№.
+ * @return Р—РЅР°С‡РµРЅРёРµ РїРѕРєР°Р·Р°С‚РµР»СЏ.
+ */
+double plant_measure(int kanal, Plant plant);
 
-	/**
-	 * @brief Подает управляющее воздействие на объект.
-	 * @param kanal Канал управления (7..10).
-	 * @param upr Величина управляющего воздействия.
-	 * @param plant Массив данных, описывающий состояние объекта.
-	 */
-	void plant_control(int kanal, double upr, Plant plant);
-
-	void enter_int(size_t& a);
-	void enter_double(double& a);
-	double uprl_vozd(double a, double b, double c, double d, double e, double f, double g, double h, double p);
+/**
+ * @brief РџРѕРґР°РµС‚ СѓРїСЂР°РІР»СЏСЋС‰РµРµ РІРѕР·РґРµР№СЃС‚РІРёРµ РЅР° РѕР±СЉРµРєС‚.
+ * @param kanal РљР°РЅР°Р» СѓРїСЂР°РІР»РµРЅРёСЏ (7..10).
+ * @param upr Р’РµР»РёС‡РёРЅР° СѓРїСЂР°РІР»СЏСЋС‰РµРіРѕ РІРѕР·РґРµР№СЃС‚РІРёСЏ.
+ * @param plant РњР°СЃСЃРёРІ РґР°РЅРЅС‹С…, РѕРїРёСЃС‹РІР°СЋС‰РёР№ СЃРѕСЃС‚РѕСЏРЅРёРµ РѕР±СЉРµРєС‚Р°.
+ */
+void plant_control(int kanal, double upr, Plant plant);
 
 #ifdef __cplusplus
 }  /* extern "C" */
+#endif
 
-#endif // PLANT_H_INCLUDED
+#endif

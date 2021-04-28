@@ -36,8 +36,8 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="main.cpp" />
-		<Unit filename="plant.cpp">
-			<Option target="&lt;{~None~}&gt;" />
+		<Unit filename="plant.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="plant.h">
 			<Option target="&lt;{~None~}&gt;" />
