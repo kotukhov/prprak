@@ -38,7 +38,7 @@ main(int argc, char* argv[])
     double B1, B2, B3, B4, B5, B6; // коэффициенты, определяющие закон управления
     double Yzhel; // Желаемое значение отклика объекта
     // Ввод исходных данных
-   /* cerr << "Enter numbers of sencors" << endl;
+    /*cerr << "Enter numbers of sencors" << endl;
     cerr << "M1 = ";
     enter_int(M1);
     cerr << "M2 = ";
@@ -64,16 +64,18 @@ main(int argc, char* argv[])
     cerr << "B6 = ";
     enter_double(B6);
     cerr << "Enter response value Yzhel";
-    enter_double(Yzhel); */
+    enter_double(Yzhel);*/
     // Получение экспериментальных данных.
-    M1=1;M2=2;L=7;J=30;N=5;
-    B1=1;B2=1;B3=5;B4=1;B5=1;B6=-0.013;Yzhel=1;
+    M1=1;M2=2;L=7;J=30;N=3;  // при N=1;Yzhel=553; Q ~ 0 //
+    B1=1;B2=1;B3=5;B4=1;B5=1;B6=-0.013;Yzhel=553;
      const size_t steps = N;
     vector<double> X1(steps);
     vector<double> X2(steps);
     vector<double> Y(steps);
     vector<double> U(steps);
     double Q = 0, f;
+        cerr << "+---+" << "-----------+" << "------------+" << "------------+" << "------------+" << endl;
+            cerr << "| N |" << "    X1     |" << "     X2     |" << "     U      |" << "     Y      |" << endl;
         for (size_t i = 1; i < steps + 1; i++)
         {
             // Измерение значений
@@ -86,14 +88,15 @@ main(int argc, char* argv[])
             // Измерение значения
             Y[i] = plant_measure(J, plant);
             // Вывод на экран значений
-            cerr << "X1[" << i << "] = " << X1[i] << endl;
-            cerr << "X2[" << i << "] = " << X2[i] << endl;
-            cerr << "U[" << i << "] = " << U[i] << endl;
-            cerr << "Y[" << i << "] = " << Y[i] << endl << endl;
+            cerr << "+---+-----------+------------+------------+------------+" << endl;
+            cerr << "| " << i << " |" << " " << X1[i] << "    " ;
+            cerr << "  " << X2[i] << "    " << "   " << U[i] << "    ";
+            cerr << "  " << Y[i] << "    " << endl;
             // Расчёт оценки качества управления и вывод на экран
-            f = pow((Y[i] - Yzhel), 2) / N;
+            f = pow((Y[i] - Yzhel), 2);
                 Q = Q + f;
         }
-    cerr << "Quality assessment = " << Q;
+        cerr << "+---+" << "-----------+" << "------------+" << "------------+" << "------------+" << endl;
+    cerr << "Quality assessment = " << Q / N;
     return 0;
 }
