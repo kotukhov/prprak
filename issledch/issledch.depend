@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1620749129 source:c:\users\user\desktop\newprak\prof\plant.c
+	<math.h>
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	"plant.h"
+
+1487011920 c:\users\user\desktop\newprak\prof\plant.h
+
+1620752780 source:c:\users\user\desktop\newprak\prof\main1.cpp
+	<iostream>
+	<vector>
+	<cmath>
+	"plant.h"
+	"discpp.h"
+
+1619529240 c:\users\user\desktop\newprak\prof\discpp.h
+
