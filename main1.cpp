@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "NEWPRAK\prof\plant.h"
-#include "NEWPRAK\prof\discpp.h"
+#include "plant.h"
+#include "discpp.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ main(int argc, char* argv[])
     double B1, B2, B3, B4, B5, B6; // коэффициенты, определяющие закон управления
     double Yzhel; // Желаемое значение отклика объекта
     // Ввод исходных данных
-    cerr << "Enter numbers of sencors" << endl;
+   /* cerr << "Enter numbers of sencors" << endl;
     cerr << "M1 = ";
     enter_int(M1);
     cerr << "M2 = ";
@@ -64,20 +64,20 @@ main(int argc, char* argv[])
     cerr << "B6 = ";
     enter_double(B6);
     cerr << "Enter response value Yzhel";
-    enter_double(Yzhel);
+    enter_double(Yzhel); */
 
-    int numB; double Bmax, Bmin, deB;
-    cerr << "Chose foef B (1-6)" << endl;
+    size_t numB; double Bmax, Bmin, deB;
+   /* cerr << "Chose foef B (1-6)" << endl;
     enter_int(numB);
     cerr << "Enter Bmax " << endl;
     enter_double(Bmax);
     cerr << "Enter Bmin " << endl;
     enter_double(Bmin);
     cerr << "Enter step(delta) " << endl;
-    enter_double(deB);
+    enter_double(deB);*/
     // Получение экспериментальных данных.
-    /*M1=1;M2=2;L=7;J=30;N=3;  // при N=1;Yzhel=553; Q ~ 0 //
-    B1=1;B2=1;B3=5;B4=1;B5=1;B6=-0.013;Yzhel=553; */
+    M1=1;M2=2;L=7;J=30;N=2;  // при N=1;Yzhel=553; Q ~ 0
+    B1=1;B2=1;B3=1;B4=1;B5=1;B6= 1/*-0.013*/;Yzhel=553;numB=6;Bmax=0;Bmin=-0.015;deB=0.001;
      const size_t steps = N;
     vector<double> X1(steps);
     vector<double> X2(steps);
@@ -92,15 +92,16 @@ main(int argc, char* argv[])
             X1[i] = plant_measure(M1, plant);
             X2[i] = plant_measure(M2, plant);
             // Вычисление управляющего воздействия
-            C = ((Bmax - Bmin) / deB ) + 1;
+            double C = ((Bmax - Bmin) / deB ) + 1;
             vector<double> U(C);
             vector<double> Y(C);
             vector<double> Q(C);
-            cerr << "+----+---------+---------+" << endl;
-            cerr << "| B" << numB << "  " << "     U     " << "    Y    " << "     Q     " << endl;
-    for (V = Bmin; V <= Bmax; V + deB)
+            cerr << "+----+-------------+-------------+----------------+" << endl;
+            cerr << "| B" << numB << " |" << "      U      |" << "      Y      |" << "       Q        |" << endl;
+            cerr << "+----+-------------+-------------+----------------+" << endl;
+    for (double V = Bmin; V <= Bmax; V = V + deB)
     {
-        cerr << "| " << V << " ";
+        cerr << "| " << V << "  |";
             if (numB == 1)
             {
                 U[V] = uprl_vozd(V, B2, X1[i], B3, Yzhel, B4, B5, B6, X2[i]);
@@ -137,13 +138,13 @@ main(int argc, char* argv[])
             /* cerr << "+---+-----------+------------+------------+------------+" << endl;
             cerr << "| " << i << " |" << " " << X1[i] << "    " ;
             cerr << "  " << X2[i] << "    " << "   " << U[i] << "    "; */
-            cerr << "   " << Y[V] << "    " << endl;
+            cerr << "   " << Y[V] << "    ";
             // Расчёт оценки качества управления и вывод на экран
             f = pow((Y[V] - Yzhel), 2);
-                Q[V] = Q[V] + f;
+                Q[V] = (Q[V] + f ) / N;
+                cerr << "    " << Q[V] << "  " << endl;
     }
         }
-        cerr << "+---+" << "-----------+" << "------------+" << "------------+" << "------------+" << endl;
-    cerr << "Quality assessment = " << Q / N;
+        cerr << "+----+-------------+-------------+----------------+" << endl;
     return 0;
 }
