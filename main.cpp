@@ -3,26 +3,26 @@
 #include <cmath>
 #include "plant.h"
 #include "discpp.h"
-
+#include <sstream>
+#include <iomanip>
 using namespace std;
 
 void enter_int(size_t& a)
 {
-	cin >> a;
+    cin >> a;
 }
 
 void enter_double(double& a)
 {
-	cin >> a;
+    cin >> a;
 }
 
 double uprl_vozd(double a, double b, double c, double d, double e, double f, double g, double h, double p)
 {
-	double u;
-	u = a + b * c + d * log(e + f + g * exp(h * p));
-	return u;
+    double u;
+    u = a + b * c + d * log(e + f + g * exp(h * p));
+    return u;
 }
-
 
 int
 main(int argc, char* argv[])
@@ -38,7 +38,7 @@ main(int argc, char* argv[])
     double B1, B2, B3, B4, B5, B6; // коэффициенты, определяющие закон управления
     double Yzhel; // Желаемое значение отклика объекта
     // Ввод исходных данных
-    cerr << "Enter numbers of sencors" << endl;
+    /*cerr << "Enter numbers of sencors" << endl;
     cerr << "M1 = ";
     enter_int(M1);
     cerr << "M2 = ";
@@ -63,42 +63,51 @@ main(int argc, char* argv[])
     enter_double(B5);
     cerr << "B6 = ";
     enter_double(B6);
-    cerr << "Enter response value Yzhel";
-    enter_double(Yzhel);
+    cerr << "Enter response value Yzhel" << endl;
+    enter_double(Yzhel);*/
     // Получение экспериментальных данных.
-   /* M1=1;M2=2;L=7;J=30;N=3;  // при N=1;Yzhel=553; Q ~ 0 //
-    B1=1;B2=1;B3=5;B4=1;B5=1;B6=-0.013;Yzhel=553; */
-     const size_t steps = N;
+    M1=1;
+    M2=2;
+    L=7;
+    J=30;
+    N=7;  // при N=1;Yzhel=553; Q ~ 0 //
+    B1=1;
+    B2=1;
+    B3=1;
+    B4=1;
+    B5=1;
+    B6=-1;
+    Yzhel=1;
+    const size_t steps = N;
     vector<double> X1(steps);
     vector<double> X2(steps);
     vector<double> Y(steps);
     vector<double> U(steps);
     double Q = 0, f;
-        cerr << "+---+" << "-----------+" << "------------+" << "------------+" << "------------+" << endl;
-            cerr << "| N |" << "    X1     |" << "     X2     |" << "     U      |" << "     Y      |" << endl;
-        for (size_t i = 1; i < steps + 1; i++)
-        {
-            // Измерение значений
-            X1[i] = plant_measure(M1, plant);
-            X2[i] = plant_measure(M2, plant);
-            // Вычисление управляющего воздействия
-            U[i] = uprl_vozd(B1, B2, X1[i], B3, Yzhel, B4, B5, B6, X2[i]);
-            // Подача управл. возд. по каналу управления L
-            plant_control(L, U[i], plant);
-            // Измерение значения
-            Y[i] = plant_measure(J, plant);
-            // Вывод на экран значений
-            cerr << "+---+-----------+------------+------------+------------+" << endl;
-            cerr << "| " << i << " |" << " " << X1[i] << "    " ;
-            cerr << "  " << X2[i] << "    " << "   " << U[i] << "    ";
-            cerr << "  " << Y[i] << "    " << endl;
-            // Расчёт оценки качества управления и вывод на экран
-            f = pow((Y[i] - Yzhel), 2);
-                Q = Q + f;
-        }
-        cerr << "+---+" << "-----------+" << "------------+" << "------------+" << "------------+" << endl;
-
-    cerr << endl << "Quality assessment = " << Q / N << endl;
-     cerr << "+---+-----------+------------+------------+------------+" << endl;
+    cerr << "+---+----------+----------+----------+----------+" << endl;
+    cerr << "| N | " << setw(8) << "X1" << " | " << setw(8) << "X2" << " | " << setw(8) << "U" << " | " << setw(8) << "Y" << " |" << endl;
+    for (size_t i = 1; i < steps + 1; i++)
+    {
+        // Измерение значений
+        X1[i] = plant_measure(M1, plant);
+        X2[i] = plant_measure(M2, plant);
+        // Вычисление управляющего воздействия
+        U[i] = uprl_vozd(B1, B2, X1[i], B3, Yzhel, B4, B5, B6, X2[i]);
+        // Подача управл. возд. по каналу управления L
+        plant_control(L, U[i], plant);
+        // Измерение значения
+        Y[i] = plant_measure(J, plant);
+        // Вывод на экран значений
+        cerr << "+---+----------+----------+----------+----------+" << endl;
+        cerr << "| " << i << " |" << " " << setw(8) << X1[i] << " | " ;
+        cerr << "" << setw(8) << X2[i] << " | " << "" << setw(8) << U[i] << " | ";
+        cerr << "" << setw(8) << Y[i] << " |" << endl;
+        // Расчёт оценки качества управления и вывод на экран
+        f = pow((Y[i] - Yzhel), 2);
+        Q = Q + f;
+    }
+    cerr << "+---+----------+----------+----------+----------+" << endl;
+    cerr << "Quality assessment = " << setw(10) << Q / N << endl;
+    cerr << "+---+----------+----------+----------+----------+" << endl;
     return 0;
 }
