@@ -8,12 +8,13 @@
 
 1487011920 c:\users\user\desktop\newprak\prof\plant.h
 
-1620753333 source:c:\users\user\desktop\newprak\prof\main1.cpp
+1621522451 source:c:\users\user\desktop\newprak\prof\main1.cpp
 	<iostream>
 	<vector>
 	<cmath>
 	"plant.h"
 	"discpp.h"
+	<iomanip>
 
 1619529240 c:\users\user\desktop\newprak\prof\discpp.h
 

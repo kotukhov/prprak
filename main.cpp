@@ -38,7 +38,7 @@ main(int argc, char* argv[])
     double B1, B2, B3, B4, B5, B6; // коэффициенты, определяющие закон управления
     double Yzhel; // Желаемое значение отклика объекта
     // Ввод исходных данных
-    /*cerr << "Enter numbers of sencors" << endl;
+    cerr << "Enter numbers of sencors" << endl;
     cerr << "M1 = ";
     enter_int(M1);
     cerr << "M2 = ";
@@ -64,20 +64,9 @@ main(int argc, char* argv[])
     cerr << "B6 = ";
     enter_double(B6);
     cerr << "Enter response value Yzhel" << endl;
-    enter_double(Yzhel);*/
+    cerr << "Yzhel = ";
+    enter_double(Yzhel);
     // Получение экспериментальных данных.
-    M1=1;
-    M2=2;
-    L=7;
-    J=30;
-    N=7;  // при N=1;Yzhel=553; Q ~ 0 //
-    B1=1;
-    B2=1;
-    B3=1;
-    B4=1;
-    B5=1;
-    B6=-1;
-    Yzhel=1;
     const size_t steps = N;
     vector<double> X1(steps);
     vector<double> X2(steps);
@@ -107,7 +96,7 @@ main(int argc, char* argv[])
         Q = Q + f;
     }
     cerr << "+---+----------+----------+----------+----------+" << endl;
-    cerr << "Quality assessment = " << setw(10) << Q / N << endl;
+    cerr << "|" <<setw(37) << "Quality assessment = " << setw(10) << Q / N << "|" << endl;
     cerr << "+---+----------+----------+----------+----------+" << endl;
     return 0;
 }
